@@ -1,0 +1,174 @@
+<%@page import="java.time.LocalDate,com.cg.bean.Employee"
+errorPage="errorPage.jsp"
+session="true"
+%>
+<h1> 
+Hello,<%=request.getParameter("username") %><%--expressions --%>
+</h1>
+<%!static int count = 0; %>
+<%="Page hit count"+ ++count %>
+<hr>Your host name is: <%=request.getRemoteHost() %>
+<hr>Your session id: <%=session.getId() %>
+<hr>
+<a href="02declaration.jsp">Declaration</a>
+
+<% 
+ //any java code can be written inside scriptlets
+ out.println("Today is :"+LocalDate.now());
+String strUser=request.getParameter("username");
+session.setAttribute("sessionUser", strUser);
+ %></h3>
+
+ <% double div=10/2; %>
+ 
+ 
+ <%
+ 	Employee employee=new Employee();
+ 	employee.setEmpId(100);
+ 	employee.setEmpName("Manasa");
+ 	employee.setEmpSal(15000.00);
+ 
+ %>
+ <h2>Displaying Employee Info-2(Tabular display)</h2>
+ <table border="1">
+ 	<tr>
+ 		<th colspan="2">Employee Info</th>
+ 	</tr>
+ 	<tr>
+ 		<th>Employee Id</th>
+ 		<th>Employee Name</th>
+ 		<th>Salary</th>
+ 	</tr>
+ 	<tr>
+ 		<td><%=employee.getEmpId()%></td>
+ 		<td><%=employee.getEmpName()%></td>
+ 		<td><%=employee.getEmpSal()%></td>
+ 	</tr>
+ </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Testing Jsp Declaration</h1>
+<%!
+private String randomHeading(){
+	/*we can't access predefined var in declaration*/
+	return("<h2>"+Math.random()+"</h2>");
+}
+%>
+<hr>
+<%=randomHeading()%>
+<hr>
+<!-- Overriding init method in Jsp -->
+<%!
+ String instanceVariable;
+ public void init()
+ {
+  instanceVariable="in init() method<br/>";
+ }
+ %>
+  <% instanceVariable+="in service() method<br/>";
+  %>
+  <%=instanceVariable%>
+  <a href="03scriptlet.jsp">Scriptlets</a>
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%@page import="java.time.LocalDateTime"%>
+<%@page import="java.time.LocalDate"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Color testing</title>
+</head>
+<%
+String bgColor = request.getParameter("bgColor");
+boolean color;
+if(bgColor !=null){
+color = true;
+}
+else{
+color=false;
+bgColor="WHITE";
+}
+%>
+<body BGCOLOR="<%=bgColor %>">
+<h2 ALIGN="CENTER">Color Testing</h2>
+<form>
+	Background Color:
+	<input type="text" name="bgColor"/>
+	<input type="submit" value="Go"/>
+</form>
+<%
+if(color){%>
+<h3><%out.println("You supplied an explicit background color of"+bgColor+"."); %>
+</h3>
+<%}else{ %>
+<h3><%out.println("Using default background color of White.Supply the bgColor request attribute to try a standard color, an RRGGBB value or to see if your browser supports X11 color names."); %>
+</h3>
+<%} %>	
+<hr>
+<%
+	LocalDateTime today=LocalDateTime.now();
+	int hours = today.getHour();
+	String strUser = (String)session.getAttribute("sessionUser");
+	if(hours>=0 && hours<12){
+	%>
+	<h2>Good Morning ,<%=strUser%></h2>
+	<%
+		}else{
+			if(hours>=12 && hours<16){
+	%>
+	<h2>Good Afternoon,<%=strUser%></h2>
+	<%
+		}else{
+			if(hours>=16 && hours<24){
+	%>
+	<h2>Good Evening,<%=strUser%></h2>
+	<%
+		}
+			}
+		}
+	%>
+</body>
+</html>
+
+
+
+
